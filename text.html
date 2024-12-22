@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Text to Image Generator</title>
   <style>
-    /* Basic styles for the page */
+   
     body {
       font-family: Arial, sans-serif;
       text-align: center;
@@ -17,7 +17,7 @@
     .container {
       margin-top: 50px;
     }
-    /* Styling the input box */
+  
     input[type="text"] {
       width: 300px;
       padding: 10px;
@@ -25,7 +25,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    /* Styling the button */
+  
     button {
       padding: 10px 20px;
       background-color:  rgb(114, 167, 180);
@@ -41,7 +41,7 @@
     .image-container {
       margin-top: 20px;
     }
-    /* Styling the generated image */
+  
     .image-container img {
       max-width: 80%;
       height: auto;
@@ -55,55 +55,55 @@
 <body>
   <div class="container">
     <h1>Text to Image Generator</h1>
-    <!-- Input box for text description -->
+   
     <input type="text" id="textInput" placeholder="Enter a description...">
-    <!-- Button to trigger image generation -->
+    
     <button onclick="generateImage()">Generate Image</button>
-    <!-- Container to display the generated image -->
+  
     <div class="image-container" id="imageContainer" style="width: 250px;height: 250px;"></div>
   </div>
 
   <script>
     async function generateImage() {
-      // Get user input text
+   
       const text = document.getElementById('textInput').value;
       if (!text) {
         alert('Please enter a description.');
-        return; // Stop execution if input is empty
+        return; 
       }
 
-      // Show a loading message while the image is being generated
+     
       const imageContainer = document.getElementById('imageContainer');
       imageContainer.innerHTML = '<p>Generating image...</p>';
 
-      // API configuration
-      const API_URL = 'https://api-inference.huggingface.co/models/Datou1111/shou_xin'; // Replace YOUR_MODEL_NAME
-      const API_TOKEN = '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'; // Replace with your Hugging Face API Token
+      
+      const API_URL = 'https://api-inference.huggingface.co/models/Datou1111/shou_xin'; 
+      const API_TOKEN = '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'; 
 
       try {
-        // Send a POST request to the API with the user input
+        
         const response = await fetch(API_URL, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${API_TOKEN}`, // Authorization header with API token
-            'Content-Type': 'application/json' // Indicating the request body format
+            'Authorization': `Bearer ${API_TOKEN}`, 
+            'Content-Type': 'application/json' 
           },
-          body: JSON.stringify({ inputs: text }) // Pass the user input as JSON
+          body: JSON.stringify({ inputs: text }) 
         });
 
-        // Check if the response is successful
+       
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Convert the response to a Blob and create an object URL
+       
         const result = await response.blob();
         const imageURL = URL.createObjectURL(result);
 
-        // Display the generated image in the container
+        
         imageContainer.innerHTML = `<img src="${imageURL}" alt="Generated Image">`;
       } catch (error) {
-        // Display an error message if the API call fails
+       
         imageContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
       }
     }
